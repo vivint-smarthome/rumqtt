@@ -25,7 +25,7 @@ use crate::client::network::{generate_httpproxy_auth, resolve};
     use tokio::net::TcpStream;
     use tokio::codec::{Decoder, Framed, LinesCodec};
     use tokio_rustls::{
-        rustls::{internal::pemfile, ClientConfig, ClientSession},
+        rustls::{internal::pemfile, ClientConfig},
         TlsConnector, TlsStream,
     };
     use webpki::DNSNameRef;
@@ -33,7 +33,7 @@ use crate::client::network::{generate_httpproxy_auth, resolve};
     #[allow(clippy::large_enum_variant)]
     pub enum NetworkStream {
         Tcp(TcpStream),
-        Tls(TlsStream<TcpStream, ClientSession>),
+        Tls(TlsStream<TcpStream>),
     }
 
     impl NetworkStream {
@@ -211,7 +211,7 @@ use crate::client::network::{generate_httpproxy_auth, resolve};
                             .and_then(move |stream| tls_connector.connect(domain.as_ref(), stream))
                             .map_err(ConnectError::from)
                             .and_then(|stream| {
-                                let stream = NetworkStream::Tls(stream);
+                                let stream = NetworkStream::Tls(TlsStream::Client(stream));
                                 future::ok(MqttCodec.framed(stream))
                             }),
                     )

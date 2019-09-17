@@ -19,12 +19,12 @@ derive_more = "0.13"
 base64 = "0.10"
 uuid = {version = "0.7", features = ["serde", "v4"]}
 mqtt311 = "0.2"
-tokio-rustls = ">=0.8, <=0.9"
-webpki = ">=0.8, <=0.19"
-
+tokio-rustls = "0.10.1"
+webpki = "0.21"
 
 [dependencies.jsonwebtoken]
-version = ">=5.0.1, <=6.0"
+git = "https://github.com/afldcr/jsonwebtoken"
+branch = "master"
 optional = true
 
 [dependencies.chrono]

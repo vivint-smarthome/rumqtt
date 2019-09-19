@@ -151,7 +151,7 @@ impl MqttState {
     /// Sets next packet id if pkid is None (fresh publish) and adds it to the
     /// outgoing publish queue
     pub fn handle_outgoing_publish(&mut self, publish: Publish) -> Result<Publish, NetworkError> {
-        
+
         let publish = match publish.qos {
             QoS::AtMostOnce => publish,
             QoS::AtLeastOnce | QoS::ExactlyOnce => self.add_packet_id_and_save(publish),
@@ -320,7 +320,7 @@ impl MqttState {
         Ok((Notification::None, Request::None))
     }
 
-    pub fn handle_outgoing_subscribe(&mut self, mut subscription: Subscribe) -> Result<Subscribe, NetworkError> {        
+    pub fn handle_outgoing_subscribe(&mut self, mut subscription: Subscribe) -> Result<Subscribe, NetworkError> {
         let pkid = self.next_pkid();
         subscription.pkid = pkid;
 
@@ -386,7 +386,7 @@ fn connect_packet(mqttoptions: &MqttOptions) -> Result<Connect, ConnectError> {
 fn gen_iotcore_password(project: String, key: &[u8], expiry: i64) -> Result<String, ConnectError> {
     //TODO: Remove chrono for current utc timestamp and use something in standard library
     use chrono::Utc;
-    use jsonwebtoken::{encode, Algorithm, Header};
+    use jsonwebtoken::{encode, Algorithm, Header, Key};
     use serde_derive::{Deserialize, Serialize};
 
     #[derive(Debug, Serialize, Deserialize)]
@@ -406,7 +406,7 @@ fn gen_iotcore_password(project: String, key: &[u8], expiry: i64) -> Result<Stri
 
     let claims = Claims { iat, exp, aud: project };
 
-    Ok(encode(&jwt_header, &claims, &key)?)
+    Ok(encode(&jwt_header, &claims, Key::Der(&key))?)
 }
 
 #[cfg(test)]

@@ -23,9 +23,9 @@ tokio-rustls = "0.10.1"
 webpki = "0.21"
 
 [dependencies.jsonwebtoken]
-git = "https://github.com/afldcr/jsonwebtoken"
-branch = "master"
+git = "https://github.com/keats/jsonwebtoken"
 optional = true
+rev = "88187e03655b953904b25e81e9e98cd1a0959e2c"
 
 [dependencies.chrono]
 version = "0.4"

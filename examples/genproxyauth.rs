@@ -1,5 +1,5 @@
 use chrono::Utc;
-use jsonwebtoken::{encode, Algorithm, Header};
+use jsonwebtoken::{encode, Algorithm, Header, Key};
 use serde_derive::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -24,7 +24,7 @@ fn main() {
         exp,
         aud: "hello world".to_string(),
     };
-    let jwt = encode(&jwt_header, &claims, key).unwrap();
+    let jwt = encode(&jwt_header, &claims, Key::Pkcs8(key)).unwrap();
     // let jwt64 = base64::encode(jwt.as_bytes());
     println!("{}", jwt);
 }

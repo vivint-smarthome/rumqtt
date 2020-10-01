@@ -16,7 +16,7 @@ crossbeam-channel = "0.3"
 log = "0.4"
 failure = "0.1"
 derive_more = "0.13"
-base64 = "0.10"
+base64 = "0.13"
 uuid = {version = "0.7", features = ["serde", "v4"]}
 mqtt311 = "0.2"
 tokio-rustls = ">=0.8, <=0.9"

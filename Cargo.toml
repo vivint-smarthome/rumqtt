@@ -10,7 +10,7 @@ license = "Unlicense"
 
 [dependencies]
 tokio = { version = "0.1.21", features = [ "codec", "io", "rt-full", "tcp", "timer" ], default-features = false }
-bytes = "0.4"
+bytes = "1.0"
 futures = "0.1.28"
 crossbeam-channel = "0.3"
 log = "0.4"
